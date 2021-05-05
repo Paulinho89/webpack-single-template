@@ -1,0 +1,5 @@
+{
+    "plugins": [
+        "@babel/plugin-syntax-dynamic-import" // 提供import()按需加载能力
+    ]
+}
