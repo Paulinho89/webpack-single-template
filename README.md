@@ -1,8 +1,8 @@
-# 介绍
+# 项目介绍
 从0到1手把手带你捋一套webpack+vue单页项目模板
-
 # 项目目录
-.
+
+```
 ├── build
 │   ├── proxy.js                       // 开发环境代理配置（用于跟后端联调进行代理）
 │   ├── dev-server.js                  // 开发环境热更新配置
@@ -30,3 +30,16 @@
     ├── main.js                        // 入口文件
     ├── page                           // 页面模块
     │   ├── index.vue
+```
+
+# 项目启动
+
+```js
+	npm run dev
+```
+# 项目打包
+
+```js
+	npm run test // 测试环境
+    npm run prod // 生产环境
+```
