@@ -35,11 +35,11 @@
 # 项目启动
 
 ```js
-	npm run dev
+npm run dev
 ```
 # 项目打包
 
 ```js
-	npm run test // 测试环境
-    npm run prod // 生产环境
+npm run test // 测试环境
+npm run prod // 生产环境
 ```
