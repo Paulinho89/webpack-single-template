@@ -24,7 +24,7 @@ export default {
         this.fetchUserInfo();
     },
     methods: {
-        ...mapActions(["fetchUserInfo"]),,,,
+        ...mapActions(["fetchUserInfo"]),
         
         babelCompileTest() {
             setTimeout(() => {

@@ -1,4 +1,4 @@
-const Template = () => import(/* webpackChunkName: "index" */ "../page/index.vue");
+const Template = () => import(/* webpackChunkName: "index" */ "@/page/index");
 
 const routes = [
     {
