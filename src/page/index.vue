@@ -26,9 +26,12 @@ export default {
     methods: {
         ...mapActions(["fetchUserInfo"]),
         
-        babelCompileTest() {
+        async babelCompileTest() {
             setTimeout(() => {
                 console.log("babelCompileTest");
+                const [first, ...rest] = [1, 2, 3, 4, 5];
+                console.log('first', first);
+                console.log('rest', rest);
             }, 10);
         }
     }

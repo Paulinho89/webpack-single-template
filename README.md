@@ -16,6 +16,7 @@
 ├── babelrc                            // babel配置
 ├── gitignore                          // gitignore配置
 ├── eslintrc                           // eslintrc配置
+├── README                             // README.md
 └── src
     ├── api                            // 项目api
     ├── router                         // 页面路由
