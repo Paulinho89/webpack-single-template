@@ -1,7 +1,15 @@
 const Path = require("path");
+const glob = require("glob");
+const HappyPack = require("happypack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PurgecssPlugin = require("purgecss-webpack-plugin");
 const BasePlugins = require("./plugins");
 
 const { resolve } = Path;
+
+const PATHS = {
+    src: Path.join(__dirname, "src")
+};
 
 module.exports = {
     output: {
@@ -18,7 +26,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    "style-loader",
+                    MiniCssExtractPlugin.loader,
                     "css-loader",
                     {
                         loader: "postcss-loader",
@@ -35,7 +43,7 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: [
-                    "style-loader",
+                    MiniCssExtractPlugin.loader,
                     "css-loader",
                     "less-loader",
                     {
@@ -52,18 +60,53 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                use: ["babel-loader"],
+                use: [
+                    {
+                        loader: "thread-loader",
+                        options: {
+                            workers: 3
+                        }
+                    },
+                    "babel-loader",
+                ],
                 exclude: /node_modules/
             },
             {
                 test: /\.(jpg|jpeg|png|gif)$/,
-                loaders: "url-loader",
-                exclude: /node_modules/,
-                options: {
-                    limit: 8192,
-                    outputPath: "img/",
-                    name: "[name]-[hash:6].[ext]"
-                }
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8192,
+                            outputPath: "img/",
+                            name: "[name]-[hash:6].[ext]"
+                        }
+                    },
+                    {
+                        loader: "image-webpack-loader",
+                        options: {
+                          mozjpeg: {
+                            progressive: true,
+                            quality: 65
+                          },
+                          // optipng.enabled: false will disable optipng
+                          optipng: {
+                            enabled: false,
+                          },
+                          pngquant: {
+                            quality: "65-90",
+                            speed: 4
+                          },
+                          gifsicle: {
+                            interlaced: false,
+                          },
+                          // the webp option will enable WEBP
+                          webp: {
+                            quality: 75
+                          }
+                        }
+                    }
+                ]
             },
             {
                 test: /\.(woff|woff2|svg|eot|ttf)$/,
@@ -80,7 +123,21 @@ module.exports = {
         ]
     },
     plugins: [
-        ...BasePlugins
+        ...BasePlugins,
+        new HappyPack({
+            // id 标识符，要和 rules 中指定的 id 对应起来
+            id: "babel",
+            // 需要使用的 loader，用法和 rules 中 Loader 配置一样
+            // 可以直接是字符串，也可以是对象形式
+            loaders: ["babel-loader?cacheDirectory=true"]
+        }),
+        new MiniCssExtractPlugin({
+            filename: "[name]_[contenthash:8].css"
+        }),
+        // 开启css的tree-shaking
+        new PurgecssPlugin({
+            paths: glob.sync(`${PATHS.src}/**/*`,  { nodir: true }),
+        })
     ],
     resolve: {
         extensions: [".js", ".json", ".css", ".less", ".vue"],

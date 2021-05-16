@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="container">
     {{ msg }}
-    <!-- <img :src="require('@/images/1.jpeg')"> -->
+    <img :src="require('@/images/bg.jpg')">
   </div>
 </template>
 
@@ -39,11 +39,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
-div {
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
     color: red;
     font-size: 20px;
+}
+
+.unused-css {
+    color: #fff;
 }
 </style>
