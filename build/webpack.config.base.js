@@ -60,15 +60,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                use: [
-                    {
-                        loader: "thread-loader",
-                        options: {
-                            workers: 3
-                        }
-                    },
-                    "babel-loader",
-                ],
+                use: ["happypack/loader?id=babel"],
                 exclude: /node_modules/
             },
             {
